@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './Component/header/header.component';
 import { FormuComponent } from './Component/formu/formu.component';
 import { ShapesComponent } from './Component/shapes/shapes.component';
+import { RegistrationComponent } from './registration/registration.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,13 +16,16 @@ import { ShapesComponent } from './Component/shapes/shapes.component';
     LoginComponent,
     HeaderComponent,
     FormuComponent,
-    ShapesComponent
+    ShapesComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+     AppRoutingModule,
+      FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,76 @@
+<p>registration works!</p>
+<form action="post" [formGroup]="userFormGroup" #UserRegister="ngForm">
+  {{UserRegister.value| json}}
+  <div class="mb-3">
+    <label for="fullName" class="form-label">Full Name</label>
+    <input id="fullName" type="text" class="form-control" formControlName ="fullName" [class.is-valid]="fullName?.valid" [class.is-invalid]="fullName?.invalid && fullName?.touched" >
+    <div [hidden]="fullName?.valid || fullName?.untouched" class="alert alert-warning" >
+     <label Class="w-100" *ngIf="fullName?.errors?.['required']" >must enter Full Name</label>
+     <label Class="w-100" *ngIf="fullName?.errors?.['minlength']" >must enter at least 5 character</label>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="Email" class="form-label">Email</label>
+    <input id="Email" type="text" class="form-control" formControlName ="email" [class.is-valid]="email?.valid" [class.is-invalid]="email?.invalid && email?.touched" >
+          <label for="">{{email?.errors| json}}</label>
+
+    <div [hidden]="email?.valid || email?.untouched" class="alert alert-warning" >
+      <label Class="w-100" *ngIf="email?.errors?.['required']" >must enter email</label>
+      <label Class="w-100" *ngIf="email?.errors?.['email']" >must enter example12@gmail.com</label>
+      <label Class="w-100" *ngIf="email?.errors?.['emailExist']" >email exists</label>
+
+    </div>
+  </div>
+
+  <div formArrayName="mobile">
+   <div class="mb-3" *ngFor="let mo of mobile.controls;let i=index" >
+      <label for="usrMobile{{i+1}}" class="form-label" >Mobile No.{{i+1}}</label>
+      <input id="usrMobile{{i+1}}" type="text" class="form-control" [formControlName]="i" [class.is-valid]="mo.valid" [class.is-invalid]="mo.invalid && mo.touched" >
+      <button class="btn btn-primary  m-auto"  *ngIf="mo.valid && i==mobile.controls.length-1">+</button>
+      <button class="btn btn-danger  m-auto"   *ngIf="i==mobile.controls.length-1 && i>0">-</button>
+
+      <div [hidden]="mo.valid || mo?.untouched" class="alert alert-warning" >
+        <label Class="w-100" *ngIf="mo?.errors?.['required']" >must enter Mobile number</label>
+        <label Class="w-100" *ngIf="mo?.errors?.['pattern']" >Mobile Number must 01212345678 </label>
+      </div>
+   </div>
+  </div>
+
+  <div formGroupName="address">
+      Address:
+      <div class="mb-3 ms-2">
+        <label for="usrCity" class="form-label">city</label>
+        <input type="text" class="form-control" name="usrCity" id="usrCity" formControlName="city" [class.is-valid]="address?.valid" [class.is-invalid]="address?.invalid && address?.touched">
+
+      </div>
+       <div class="mb-3 ms-2">
+        <label for="usrcode" class="form-label">postal code</label>
+        <input type="text"  class="form-control" name="usrcode" id="usrcode" formControlName="postalPostal" [class.is-valid]="address?.valid" [class.is-invalid]="address?.invalid && address?.touched">
+      </div>
+      <div class="mb-3 ms-2">
+        <label for="usrStreet" class="form-label">Street</label>
+        <input type="text"  class="form-control" name="usrStreet" id="usrStreet" formControlName="street" [class.is-valid]="address?.valid" [class.is-invalid]="address?.invalid && address?.touched"s>
+      </div>
+      <div [hidden]="address?.valid || address?.untouched" class="alert alert-warning" >
+        <label Class="w-100"  >must enter City & postal code & City </label>
+      </div>
+    </div>
+    <div class="mb-3">
+    <label for="password" class="form-label">password</label>
+    <input id="password" type="text" class="form-control" formControlName ="password" [class.is-valid]="password?.valid" [class.is-invalid]="password?.invalid && password?.touched" >
+    <div [hidden]="password?.valid || password?.untouched" class="alert alert-warning" >
+      <label Class="w-100" *ngIf="password?.errors?.['required']" >must enter password</label>
+      <label Class="w-100" *ngIf="password?.errors?.['minlength']" >must enter 6 character</label>
+
+    </div>
+  </div>
+   <div class="mb-3">
+    <label for="confirmpassword" class="form-label">confirm password</label>
+    <input  id="confirmpassword" type="text" class="form-control" formControlName ="confirmPassword" [class.is-valid]="confirmPassword?.value == password?.value && confirmPassword?.touched" [class.is-invalid]="confirmPassword?.value != password?.value && confirmPassword?.touched" >
+    <div [hidden]="confirmPassword?.value == password?.value || confirmPassword?.untouched" class="alert alert-warning" >
+      <label Class="w-100" *ngIf="confirmPassword?.value != password?.value" >password not matched</label>
+    </div>
+  </div>
+    <button type="submit" class="btn btn-success" [disabled]="userFormGroup.invalid" >Sign Up</button>
+
+  </form>
